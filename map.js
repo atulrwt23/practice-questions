@@ -61,12 +61,18 @@ const deStructure = function (text) {
   return [...text];
 }
 
-const reverse = function (text) {
+const joinArray = function (seperator) {
+  return function (array) {
+    return array.join(seperator);
+  };
+};
+
+const reverseText = function (text) {
   return deStructure(text).reverse();
 };
 
 const reversedStringsOf = function (strings) { 
-  return strings.map(reverse);
+  return strings.map(reverseText).map(joinArray(""));
 };
 
 console.log(reversedStringsOf(["hello", "world"]));
@@ -74,15 +80,11 @@ console.log(reversedStringsOf(["hello", "world"]));
 // double letters of ["cat", "dog", "bat"] => ["ccaatt", "ddoogg", "bbaatt"]
 const double = function (value) {
   return value + value;
-}
-
-const joinArray = function (array) {
-  return array.join("")
-}
+};
 
 const twoOfEach = function (text) {
-  return joinArray(deStructure(text).map(double));
-}
+  return joinArray("")(deStructure(text).map(double));
+};
 
 const doubleLettersOf = function (strings) { 
   return strings.map(twoOfEach);
@@ -140,7 +142,7 @@ console.log(splitWordsOf(["hello world", "goodbye moon"]));
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
 const joinedArraysOf = function (arrayOfArrays) { 
-  return arrayOfArrays.map(joinArray);
+  return arrayOfArrays.map(joinArray(""));
 };
 
 console.log(joinedArraysOf([["a", "b"], ["c", "d"]]));
@@ -165,7 +167,7 @@ const replaceChar = function (typeOfChar) {
 
 const leaveOnly = function (typeOfChar) {
   return function (text) {
-    return joinArray(deStructure(text).map(replaceChar(typeOfChar)));
+    return joinArray("")(deStructure(text).map(replaceChar(typeOfChar)));
   };
 };
 
@@ -177,7 +179,7 @@ console.log(countVowelsOf(["apple", "banana", "grape"]));
 
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
 const reversedArraysOf = function (arrays) { 
-  return arrays.map(reverse);
+  return arrays.map(reverseText);
 };
 
 console.log(reversedArraysOf([[1, 2, 3], [4, 5, 6]]));
@@ -195,11 +197,35 @@ console.log(withoutVowelsOf(["apple", "banana", "grape"]));
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
-const cumulativeSumsOf = function (arrays) { };
+const rememberSum = function () {
+  let totalSum = 0;
+  return function (num) {
+    totalSum = totalSum + num;
+
+    return totalSum;
+  };
+};
+
+const mapper = function (fun) {
+  return function (array) {
+    return array.map(fun);
+  }
+}
+
+
+const cumulativeSumsOf = function (arrays) {
+  return arrays.map(mapper(rememberSum()));
+};
+
+console.log(cumulativeSumsOf([[1, 2, 3], [4, 5, 6]]));
 
 // reverse words in ["hello world", "goodbye moon"] => 
 // ["olleh dlrow", "eybdoog noom"]
-const reversedWordsOf = function (strings) { };
+const reversedWordsOf = function (strings) {
+  return strings.map(splitText(" ")).map(reversedStringsOf).map(joinArray(" "));
+};
+ 
+console.log(reversedWordsOf(["hello world", "goodbye moon"]));
 
 // extract unique characters from ["apple", "banana", "grape"] => 
 // ["apl", "ban", "gra"]

@@ -29,78 +29,121 @@ const uppercaseOf = function (strings) {
   return strings.map(UPPERCASE);
 };
 
-console.log(["hello", "world"]);
+console.log(uppercaseOf(["hello", "world"]));
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
-const extractLetter = function (index) {
+const extractStr = function (index) {
   return function (text) {
     return text.at(index);
   };
 };
 
 const firstCharactersOf = function (strings) {
-  return strings.map(extractLetter(0));
+  return strings.map(extractStr(0));
 };
 
-console.log(["apple", "banana", "kiwi"]);
+console.log(firstCharactersOf(["apple", "banana", "kiwi"]));
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const booleanForm = function (num) {
-  return num === 0 ? false : true;
+const booleanOf = function (num) {
+  return num !== 0;
 };
 
 const truthValuesOf = function (numbers) { 
-  return numbers.map(booleanForm);
+  return numbers.map(booleanOf);
 };
 
-console.log([0, 1, 2, 3]);
+console.log(truthValuesOf([0, 1, 2, 3]));
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
+const deStructure = function (text) {
+  return [...text];
+}
+
 const reverse = function (text) {
-  return text.reverse();
+  return deStructure(text).reverse();
 };
 
 const reversedStringsOf = function (strings) { 
   return strings.map(reverse);
 };
 
-console.log(["hello", "world"]);
+console.log(reversedStringsOf(["hello", "world"]));
 
 // double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
-const double = function (value) {
+const concat = function (value) {
   return value + value;
 }
 
-const deStructure = function (text) {
-  return [...text];
+const joinArray = function (array) {
+  return array.join("")
 }
 
 const twoOfEach = function (text) {
-  return deStructure(text).map(double);
+  return joinArray(deStructure(text).map(concat));
 }
 
 const doubleLettersOf = function (strings) { 
   return strings.map(twoOfEach);
 };
 
-console.log(["cat", "dog", "bat"]);
+console.log(doubleLettersOf(["cat", "dog", "bat"]));
 
 // boolean negation of [true, false, true] => [false, true, false]
-const negatedBooleansOf = function (booleans) { };
+const invert = function (boolean) {
+  return !boolean;
+}
+
+const negatedBooleansOf = function (booleans) { 
+  return booleans.map(invert);
+};
+
+console.log(negatedBooleansOf([true, false, true]));
 
 // character codes of ["a", "b", "c"] => [97, 98, 99]
 // Use the `charCodeAt` method on each string
-const charCodesOf = function (strings) { };
 
-// extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => ["gmail.com", "yahoo.com"]
-const domainNamesOf = function (emails) { };
+const codeOf = function (index) {
+  return function (text) {
+    return text.charCodeAt(index);
+  }
+}
 
-// split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWordsOf = function (strings) { };
+const charCodesOf = function (strings) { 
+  return strings.map(codeOf(0));
+};
+
+console.log(charCodesOf(["a", "b", "c"]));
+
+// extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => 
+// ["gmail.com", "yahoo.com"]
+const splitText = function (seperator) {
+  return function (texts) {
+    return texts.split(seperator);
+  }
+}
+
+const domainNamesOf = function (emails) { 
+  return emails.map(splitText("@")).map(extractStr(-1));
+};
+
+console.log(domainNamesOf(["user1@gmail.com", "admin@yahoo.com"]));
+
+// split words in ["hello world", "goodbye moon"] => [["hello", "world"], 
+// ["goodbye", "moon"]]
+const splitWordsOf = function (strings) { 
+  return strings.map(splitText(" "));
+};
+
+console.log(splitWordsOf(["hello world", "goodbye moon"]));
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinedArraysOf = function (arrayOfArrays) { };
+const joinedArraysOf = function (arrayOfArrays) { 
+  return arrayOfArrays.map(joinArray);
+};
+
+console.log(joinedArraysOf([["a", "b"], ["c", "d"]]));
 
 // repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
 const repeatedStringsOf = function (strings) { };

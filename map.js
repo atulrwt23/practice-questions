@@ -1,50 +1,90 @@
 // squares of [1, 2, 3] => [1, 4, 9]
 const square = function (num) {
   return num * num;
-}
+};
 
 const squaresOf = function (numbers) {
   return numbers.map(square);
- };
+};
+
+console.log(squaresOf([-2, -1, 0, 1, 2, 3]));
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
 const length = function (text) {
   return text.length;
-}
- 
-const lengthsOf = function (strings) { 
+};
+
+const lengthsOf = function (strings) {
   return strings.map(length);
 };
+
+console.log(lengthsOf(["apple", "banana", "kiwi"]));
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const UPPERCASE = function (text) {
   return text.toUpperCase();
-}
+};
 
-const uppercaseOf = function (strings) { 
+const uppercaseOf = function (strings) {
   return strings.map(UPPERCASE);
 };
+
+console.log(["hello", "world"]);
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
 const extractLetter = function (index) {
   return function (text) {
     return text.at(index);
-  }
-}
+  };
+};
 
-const firstCharactersOf = function (strings) { 
+const firstCharactersOf = function (strings) {
   return strings.map(extractLetter(0));
 };
 
+console.log(["apple", "banana", "kiwi"]);
+
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const truthValuesOf = function (numbers) { };
+const booleanForm = function (num) {
+  return num === 0 ? false : true;
+};
+
+const truthValuesOf = function (numbers) { 
+  return numbers.map(booleanForm);
+};
+
+console.log([0, 1, 2, 3]);
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reversedStringsOf = function (strings) { };
+const reverse = function (text) {
+  return text.reverse();
+};
+
+const reversedStringsOf = function (strings) { 
+  return strings.map(reverse);
+};
+
+console.log(["hello", "world"]);
 
 // double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
-const doubleLettersOf = function (strings) { };
+const double = function (value) {
+  return value + value;
+}
+
+const deStructure = function (text) {
+  return [...text];
+}
+
+const twoOfEach = function (text) {
+  return deStructure(text).map(double);
+}
+
+const doubleLettersOf = function (strings) { 
+  return strings.map(twoOfEach);
+};
+
+console.log(["cat", "dog", "bat"]);
 
 // boolean negation of [true, false, true] => [false, true, false]
 const negatedBooleansOf = function (booleans) { };

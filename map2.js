@@ -199,7 +199,7 @@ console.log(isAdult([{ name: "Alice", age: 17 },
 // create abbreviations from [{ city: "New York", country: "USA" }, 
 // { city: "Los Angeles", country: "USA" }] => ["NY, USA", "LA, USA"]
 const abbreviations = function (objects) {
-  
+
 };
 
 // extract scores for math tests from [{ name: "Alice", scores:

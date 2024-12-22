@@ -165,27 +165,21 @@ const withoutVowelsOf = function (strings) {
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
-const sum = function (first, second) {
-  return first + second;
-};
-
-const rememberSum = function (fun, init) {
-  let total = init;
+const rememberSum = function () {
+  let total = 0;
   return function (value) {
-    total = fun(total, value);
+    total = total + value;
 
     return total;
   };
 };
 
-const mapper = function (fun, fnx, init) {
-  return function (array) {
-    return array.map(fun(fnx, init));
-  };
-};
+const callMap = function (array) {
+  return array.map(rememberSum());
+}
 
 const cumulativeSumsOf = function (arrays) {
-  return arrays.map(mapper(rememberSum, sum, 0));
+  return arrays.map(callMap);
 };
 
 // reverse words in ["hello world", "goodbye moon"] => 

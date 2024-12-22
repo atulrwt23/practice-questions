@@ -8,12 +8,12 @@ const squaresOf = function (numbers) {
 };
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const size = function (text) {
+const countLength = function (text) {
   return text.length;
 };
 
 const lengthsOf = function (strings) {
-  return strings.map(size);
+  return strings.map(countLength);
 };
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
@@ -146,7 +146,7 @@ const leaveOnly = function (typeOfChar) {
 };
 
 const countVowelsOf = function (strings) { 
-  return strings.map(leaveOnly(isCharVowel)).map(size);
+  return strings.map(leaveOnly(isCharVowel)).map(countLength);
 };
 
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
@@ -167,7 +167,7 @@ const withoutVowelsOf = function (strings) {
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
 const sum = function (first, second) {
   return first + second;
-}
+};
 
 const rememberSum = function (fun, init) {
   let total = init;
@@ -181,8 +181,8 @@ const rememberSum = function (fun, init) {
 const mapper = function (fun, fnx, init) {
   return function (array) {
     return array.map(fun(fnx, init));
-  }
-}
+  };
+};
 
 const cumulativeSumsOf = function (arrays) {
   return arrays.map(mapper(rememberSum, sum, 0));
@@ -195,23 +195,27 @@ const reversedWordsOf = function (strings) {
 };
 
 // extract unique characters from ["apple", "banana", "grape"] => 
-// ["apl", "ban", "gra"]
+// ["aple", "ban", "grape"]
 // Maintain the order of their first appearance in each string
 const isUnique = function () {
   let string = "";
   return function (char) {
+    const shouldAdd = !string.includes(char);
     string = string + char;
-    return !string.includes(char);
+
+    return shouldAdd;
   };
 };
 
-const uniqueCharactersOf = function (strings) { 
-  return strings.map(leaveOnly(isUnique()));
+const onlyUnique = function (text) {
+  return joinArray("")(deStructure(text).map(replaceChar(isUnique())));
 };
 
+const uniqueCharactersOf = function (strings) { 
+  return strings.map(onlyUnique);
+};
 
 console.log(uniqueCharactersOf(["apple", "banana", "grape"]));
-console.log = function () { };
 console.log(squaresOf([-2, -1, 0, 1, 2, 3]));
 console.log(lengthsOf(["apple", "banana", "kiwi"]));
 console.log(uppercaseOf(["hello", "world"]));
@@ -230,3 +234,4 @@ console.log(countVowelsOf(["apple", "banana", "grape"]));
 console.log(repeatedStringsOf(["hi", "bye"]));
 console.log(reversedArraysOf([[1, 2, 3], [4, 5, 6]]));
 console.log(cumulativeSumsOf([[1, 2, 3], [4, 5, 6]]));
+console.log = function () { };

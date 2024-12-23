@@ -167,9 +167,9 @@ console.log(joinWithComma(["apple", "banana", "cherry"]));
 
 
 const reverseWords = function (words) {
-  const reverse = words.reverse();
+  const reversedWords = words.reverse();
 
-  return reverse.reduce(joinWith(" "));
+  return reversedWords.reduce(joinWith(" "));
 }
 
 console.log(reverseWords(["apple", "banana", "cherry"]));

@@ -17,41 +17,55 @@ console.log(groupByLength(["apple", "banana", "cherry", "date"]));
 
 // countOccurrences(["apple", "banana", "cherry", "banana"]) => 
 // { apple: 1, banana: 2, cherry: 1 }
-const count = function () {
-  let num = 0;
 
-  return function () {
-    num += 1;
-    return num;
+const convertToObj = function (obj, word) {
+  if (obj[word] === undefined) {
+    obj[word] = 0;
   }
-}
+  obj[word] = obj[word] + 1;
 
-const counting = function (obj, value) {
-  obj[value] = count();
-
-  return obj[value];
+  return obj;
 }
 
 const countOccurrences = function (strings) {
-  return strings.reduce(counting, {});
+  return strings.reduce(convertToObj, {});
 }
 
 console.log(countOccurrences(["apple", "banana", "cherry", "banana"]));
 
-// mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
-const mergeObjects = function (objects) { }
+// mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => 
+// { a: 6, b: 5, c: 4 }
+const mergeObjects = function (objects) {
+}
 
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
-const zip = function (keys, values) { }
+const zipTogether = function (keys) {
+  return function (obj, value, index) {
+    obj[keys[index]] = value;
+    return obj;
+  }
+}
+
+const zip = function (keys, values) {
+  return values.reduce(zipTogether(keys), {});
+}
+
+console.log(zip(["a", "b", "c"], [1, 2, 3]));
 
 // makeObject(["city", "country"], ["Paris", "France"]) => { "city": "Paris", "country": "France" }
-const makeObject = function (keys, values) { }
+const makeObject = function (keys, values) {
+  return values.reduce(zipTogether(keys), {});
+}
+
+console.log(makeObject(["city", "country"], ["Paris", "France"]));
 
 // invertObject({ "a": 1, "b": 2, "c": 3 }) => { 1: "a", 2: "b", 3: "c" }
 const invertObject = function (obj) { }
 
 // mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
-const mergeArrays = function (arr1, arr2) { }
+const mergeArrays = function (arr1, arr2) {
+  return arr1.concate(arr2).reduce()
+}
 
 // groupByProperty([{name: "John", age: 25}, {name: "Jane", age: 30}]) => { 25: [{name: "John", age: 25}], 30: [{name: "Jane", age: 30}] }
 const groupByProperty = function (objects) { }

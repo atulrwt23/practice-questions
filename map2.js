@@ -117,9 +117,7 @@ console.log(wrappedStringsOf(["apple", "banana"]));
 
 // extract names from [{ name: "Alice" }, { name: "Bob" }] => ["Alice", "Bob"]
 const extract = function (key) {
-  return function (obj) {
-    return obj[key];
-  };
+  return (obj) => obj[key];
 };
 
 const extractNames = function (objects) {

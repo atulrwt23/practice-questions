@@ -102,7 +102,7 @@ console.log(
 // [[1,2,3,4],[3,4,5],[10],[6,7,8,9]]
 
 const makePairs = function (pairs, element) {
-  if (!pairs.at(-1).every((num) => num < element)) {
+  if (!pairs.at(-1).every(num => num < element)) {
     pairs.push([]);
   }
 
@@ -117,34 +117,102 @@ const ascendingGroups = function (numbers) {
 console.log(ascendingGroups([1, 2, 3, 4, 3, 4, 5, 10, 6, 7, 8, 9]));
 
 // flattenToObject([['a', 1], ['b', 2], ['c', 3]]) => { a: 1, b: 2, c: 3 }
-const flattenToObject = function (pairs) {};
+const flattenToObject = function (pairs) {
+  return pairs.reduce((obj, pair) => {
+    obj[pair[0]] = pair[1];
+    return obj;
+  }, {});
+};
+
+console.log(
+  flattenToObject([
+    ["a", 1],
+    ["b", 2],
+    ["c", 3],
+  ])
+);
 
 // longestString(["apple", "banana", "cherry", "dates"]) => "banana"
-const longestString = function (strings) {};
+const longestString = function (strings) {
+  return strings.reduce((max, candidate) => {
+    return max.length > candidate.length ? max : candidate;
+  });
+};
+
+console.log(longestString(["apple", "banana", "cherry", "dates"]));
 
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
 
 // sumAndCount([1, 2, 3, 4]) => { sum: 10, count: 4 }
-const sumAndCount = function (numbers) {};
+const sumAndCount = function (numbers) {
+  const result = { sum: 0, count: 0 };
+  return numbers.reduce((result, num) => {
+    result.sum += num;
+    result.count += 1;
+
+    return result;
+  }, result);
+};
+
+console.log(sumAndCount([1, 2, 3, 4]));
 
 // deepFlatten([[1,2], [3,4, [5,6]], 7]) => [1,2,3,4,5,6,7]
-const deepFlatten = function (arr) {};
+const deepFlatten = function (arr) {
+  return arr.reduce((flat, item) => {
+    Array.isArray(item) ? flat.push(...deepFlatten(item)) : flat.push(item);
+
+    return flat;
+  }, []);
+};
 
 // findMax([1, 2, 3, 4, 5]) => 5
-const findMax = function (numbers) {};
+const findMax = function (numbers) {
+  return numbers.reduce((num1, num2) => (num1 > num2 ? num1 : num2));
+};
 
 // cumulativeSum([1,2,3,4]) => [1, 3, 6, 10]
-const cumulativeSum = function (numbers) {};
+const cumulativeSum = function (numbers) {
+  const sum = numbers.reduce((sum, num) => [...sum, sum.at(-1) + num], [0]);
+  return sum.slice(1);
+};
 
 // equalChunksOfAtLeast([1, 1, 1, 2, 2, 5, 1, 1]) => [[1,1,1], [2,2], [1,1]]
-const equalChunksOfAtLeast = function (numbers) {};
+const equalChunksOfAtLeast = function (numbers) {
+  const equalChunks = numbers.reduce(
+    (chunk, num) => {
+      if (!chunk.at(-1).includes(num)) {
+        chunk.push([]);
+      }
 
-// groupByType([1, 'a', 2, 'b', 3, 'c', 4]) => { number: [1, 2, 3, 4], string: ['a', 'b', 'c'] }
-const groupByType = function (array) {};
+      chunk.at(-1).push(num);
+      return chunk;
+    },
+    [[]]
+  );
+
+  return equalChunks.filter(chunk => chunk.length > 1);
+};
+
+// groupByType([1, 'a', 2, 'b', 3, 'c', 4]) =>
+// { number: [1, 2, 3, 4], string: ['a', 'b', 'c'] }
+const groupByType = function (array) {
+  return array.reduce(
+    (group, item) => {
+      typeof item === "number"
+        ? group.number.push(item)
+        : group.string.push(item);
+
+      return group;
+    },
+    { number: [], string: [] }
+  );
+};
 
 // runningAverages([1, 2, 3, 4]) => [1, 1.5, 2, 2.5]
-const runningAverages = function (numbers) {};
+const runningAverages = function (numbers) {
+  return numbers.reduce(() => {});
+};
 
 // flattenObject({a: {b: {c: 1}}, d: {e: 2}}) => { 'a.b.c': 1, 'd.e': 2 }
 const flattenObject = function (obj) {};
@@ -182,5 +250,6 @@ const groupByDate = function (records) {};
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
 const findMinMax = function (numbers) {};
 
-// sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
+// sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 },
+// { category: 'A', value: 30 }]) => { A: 40, B: 20 }
 const sumByCategory = function (items) {};
